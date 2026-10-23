@@ -42,8 +42,9 @@ The application is structured as a continuous single-page layout with smooth anc
 │    - Flagship Feature: Papyrus Photobox                │
 │      (Interactive Card, Tech Badges, Metrics, [Case Study Button])
 │    - Secondary Grid:                                   │
-│      • Cash (React Native / Expo / Clean Architecture) │
-│      • BRB (macOS Native Swift Proximity Security)     │
+│      • Land Manifest (React Native / Background GPS / Fleet Telemetry) │
+│      • Cash (React Native / Expo / Clean Architecture)                 │
+│      • BRB (macOS Native Swift Proximity Security)                     │
 ├────────────────────────────────────────────────────────┤
 │ 3. Technical Arsenal & Architecture Matrix             │
 │    - Mobile Core (Flutter, Swift, React Native, Kotlin)│
@@ -89,6 +90,7 @@ The application is structured as a continuous single-page layout with smooth anc
     - Key Highlights: Cross-platform reliability, low-latency live camera feed, offline-first transaction/session sync, kiosk printing pipeline.
     - Prominent action: **"Read Architectural Case Study →"** (triggers the drawer).
 - **Companion Project Cards**:
+  - **Land Manifest**: Enterprise fleet and driver telemetry application built with React Native and Expo TaskManager. Focus: Background GPS tracking, local FileSystem offline queuing, and real-time WebSocket dispatch.
   - **Cash**: Personal wealth and cash flow tracker built with React Native / Expo, Clean Architecture, and PocketBase. Focus: Offline persistence, domain separation, robust testing.
   - **BRB**: macOS menu bar utility written in native Swift / SwiftUI using Bluetooth proximity RSSI tracking for auto-locking and tamper security.
 - **Card Content**: Title, brief problem/solution overview, key technical tags, direct repository/demo links (if public), and Case Study trigger.

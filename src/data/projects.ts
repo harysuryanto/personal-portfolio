@@ -215,4 +215,73 @@ export const projects: Project[] = [
       ]
     }
   }
+,
+  {
+    id: "land-manifest",
+    title: "Land Manifest",
+    tagline: "Enterprise Fleet Telemetry & Driver Logistics Platform",
+    category: "Logistics & Fleet Systems",
+    platforms: ["React Native", "Expo SDK 54", "Android / iOS", "WebSocket"],
+    techStack: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Expo TaskManager",
+      "Background Location",
+      "WebSocket Telemetry",
+      "NativeWind",
+      "TanStack Query",
+      "FileSystem Queue"
+    ],
+    summary:
+      "Enterprise mobile client engineered for commercial drivers and logistics dispatchers. Features background GPS telemetry with offline dead-zone queuing via local FileSystem, real-time WebSocket vehicle streaming, digital proof-of-delivery signatures, and manifest QR scanning.",
+    metrics: [
+      { label: "Offline Resilience", value: "Persistent FileSystem Queue" },
+      { label: "Background Telemetry", value: "Expo TaskManager Worker" },
+      { label: "Dispatch Sync", value: "Real-Time WebSocket" }
+    ],
+    caseStudy: {
+      context:
+        "Heavy freight logistics requires continuous real-time vehicle positioning and proof-of-delivery across transit corridors with frequent intermittent cellular dropouts.",
+      problem:
+        "Mobile OS runtimes aggressively throttle background JavaScript execution, causing lost fleet coordinates, corrupted tracking paths, and dispatch desynchronization in cellular blackouts.",
+      architectureOverview:
+        "Engineered with Expo TaskManager running a decoupled background GPS worker (`background-location-task`). Coordinates flow through an atomic local `LocationQueue` on the FileSystem and stream to dispatch servers via persistent WebSockets with automatic retry.",
+      keyChallenges: [
+        {
+          title: "Dead-Zone Telemetry Queuing & Reconnection Flush",
+          description:
+            "Drivers frequently travel through signal dead-zones where cellular connections drop for 10-30 minutes, leading to unrecoverable gaps in dispatch tracking.",
+          solution:
+            "Engineered a persistent `LocationQueue` holding up to 500 geolocations in local filesystem storage with exponential backoff flushing upon WebSocket reconnect."
+        },
+        {
+          title: "Battery & Background Execution Budgeting",
+          description:
+            "Constant high-accuracy GPS sampling rapidly drains driver device batteries during 8-12 hour transit shifts.",
+          solution:
+            "Optimized distance-interval triggers, movement threshold gates, and dynamic throttle cooldowns to preserve device battery while meeting fleet audit compliance."
+        },
+        {
+          title: "Digital Proof-of-Delivery Handshake",
+          description:
+            "Drivers require instant digital sign-off and cargo manifest QR verification at delivery checkpoints.",
+          solution:
+            "Integrated native canvas signature captures and high-density QR camera vision for immediate manifest dispatch validation."
+        }
+      ],
+      techHighlights: [
+        "Decoupled background location engine using Expo TaskManager",
+        "Resilient offline queue (`LocationQueue`) written to app FileSystem sandbox",
+        "Real-time bidirectional WebSocket client with auto-reconnection & token refresh",
+        "Digital proof-of-delivery signature canvas and QR barcode scanning",
+        "TanStack Query optimistic caching and NativeWind responsive driver UX"
+      ],
+      outcomes: [
+        "100% telemetry retention through cellular dropouts and tunnel passages",
+        "Streamlined driver dispatch workflow replacing paper delivery manifests",
+        "Reliable full-shift background tracking across diverse Android fleet devices"
+      ]
+    }
+  }
 ];

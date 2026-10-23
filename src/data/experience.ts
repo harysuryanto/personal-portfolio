@@ -35,6 +35,7 @@ export const experiences: ExperienceItem[] = [
     description:
       "Built and delivered production cross-platform mobile and desktop applications emphasizing Clean Architecture, offline resilience, and hardware integration.",
     highlights: [
+      "Architected 'Land Manifest', an enterprise logistics driver app with Expo TaskManager background GPS tracking, dead-zone FileSystem queuing, and WebSocket dispatch telemetry.",
       "Developed 'Cash', an offline-first wealth management app with React Native, Expo, and hardware-accelerated Shopify Skia charts.",
       "Created 'BRB', a macOS presence-privacy menu bar daemon in native Swift leveraging CoreBluetooth RSSI EMA smoothing algorithms.",
       "Contributed to open-source mobile ecosystems including custom streaming patches for Flutter media libraries."
