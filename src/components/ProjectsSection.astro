@@ -4,36 +4,117 @@ import ProjectCard from './ProjectCard.astro';
 
 const flagship = projects.find((p) => p.isFlagship);
 const companionProjects = projects.filter((p) => !p.isFlagship);
+
+const flutterCount = projects.filter((p) => p.filterTag === 'flutter').length;
+const rnCount = projects.filter((p) => p.filterTag === 'react-native').length;
+const swiftCount = projects.filter((p) => p.filterTag === 'swift-native').length;
 ---
 
 <section id="work" class="py-16 md:py-24 border-t border-zinc-900 scroll-mt-16">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="max-w-2xl mb-12">
-      <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span>Featured Case Studies</span>
+    <!-- Section Header & Filter Controls -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div class="max-w-2xl">
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Complete Work Portfolio ({projects.length} Shipped Systems)</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          Production Engineering & Client Systems
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 mt-2">
+          Commercial photo kiosks, enterprise fleet GPS tracking, consultative sales engines, vector geospatial mapping, and macOS kernel signal processing.
+        </p>
       </div>
-      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-        Production Engineering & Client Systems
-      </h2>
-      <p class="text-sm sm:text-base text-zinc-400 mt-2">
-        Real-world client architectures solving hardware camera bottlenecks, Bluetooth RF telemetry, and offline-first finance pipelines.
-      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 bg-zinc-900/80 border border-zinc-800/80 p-1.5 rounded-xl text-xs font-mono shadow-sm">
+        <button
+          type="button"
+          data-filter-btn="all"
+          class="project-filter-btn active-filter px-3 py-1.5 rounded-lg font-medium transition-all duration-150 cursor-pointer bg-emerald-500 text-zinc-950 font-semibold shadow-sm"
+        >
+          All ({projects.length})
+        </button>
+        <button
+          type="button"
+          data-filter-btn="flutter"
+          class="project-filter-btn px-3 py-1.5 rounded-lg font-medium text-zinc-400 hover:text-white transition-all duration-150 cursor-pointer"
+        >
+          Flutter ({flutterCount})
+        </button>
+        <button
+          type="button"
+          data-filter-btn="react-native"
+          class="project-filter-btn px-3 py-1.5 rounded-lg font-medium text-zinc-400 hover:text-white transition-all duration-150 cursor-pointer"
+        >
+          React Native ({rnCount})
+        </button>
+        <button
+          type="button"
+          data-filter-btn="swift-native"
+          class="project-filter-btn px-3 py-1.5 rounded-lg font-medium text-zinc-400 hover:text-white transition-all duration-150 cursor-pointer"
+        >
+          Swift / macOS ({swiftCount})
+        </button>
+      </div>
     </div>
 
     <!-- Flagship Showcase -->
     {flagship && (
-      <div class="mb-10">
+      <div id="flagship-container" class="mb-10 transition-opacity duration-200">
         <ProjectCard project={flagship} />
       </div>
     )}
 
     <!-- Secondary Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
       {companionProjects.map((project) => (
         <ProjectCard project={project} />
       ))}
     </div>
   </div>
 </section>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.project-filter-btn');
+  const projectCards = document.querySelectorAll<HTMLElement>('[data-project-card]');
+  const flagshipContainer = document.getElementById('flagship-container');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetFilter = btn.getAttribute('data-filter-btn') || 'all';
+
+      // Update button styling
+      filterBtns.forEach((b) => {
+        b.classList.remove('bg-emerald-500', 'text-zinc-950', 'font-semibold', 'shadow-sm', 'active-filter');
+        b.classList.add('text-zinc-400', 'hover:text-white');
+      });
+
+      btn.classList.remove('text-zinc-400', 'hover:text-white');
+      btn.classList.add('bg-emerald-500', 'text-zinc-950', 'font-semibold', 'shadow-sm', 'active-filter');
+
+      // Filter cards
+      projectCards.forEach((card) => {
+        const cardFilter = card.getAttribute('data-filter');
+        const isMatch = targetFilter === 'all' || cardFilter === targetFilter;
+
+        if (isMatch) {
+          card.style.display = '';
+          card.style.opacity = '1';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+
+      // Handle flagship container visibility
+      if (flagshipContainer) {
+        const flagshipCard = flagshipContainer.querySelector<HTMLElement>('[data-project-card]');
+        const flagshipFilter = flagshipCard?.getAttribute('data-filter');
+        const showFlagship = targetFilter === 'all' || flagshipFilter === targetFilter;
+        flagshipContainer.style.display = showFlagship ? '' : 'none';
+      }
+    });
+  });
+</script>

@@ -9,7 +9,7 @@ const { project } = Astro.props;
 ---
 
 {project.isFlagship ? (
-  <article class="relative rounded-2xl bg-gradient-to-b from-zinc-900/90 to-zinc-950 border border-emerald-500/30 p-6 sm:p-8 shadow-xl shadow-emerald-950/20 hover:border-emerald-500/50 transition-all duration-300">
+  <article data-project-card data-filter={project.filterTag} class="relative rounded-2xl bg-gradient-to-b from-zinc-900/90 to-zinc-950 border border-emerald-500/30 p-6 sm:p-8 shadow-xl shadow-emerald-950/20 hover:border-emerald-500/50 transition-all duration-300">
     <div class="flex flex-col lg:flex-row gap-8 items-start justify-between">
       <div class="flex-1 space-y-4">
         <!-- Badges -->
@@ -124,7 +124,7 @@ const { project } = Astro.props;
     </div>
   </article>
 ) : (
-  <article class="rounded-2xl bg-zinc-900/60 border border-zinc-800/80 p-6 flex flex-col justify-between hover:border-zinc-700 transition-all duration-200 hover:shadow-lg hover:shadow-zinc-950/40">
+  <article data-project-card data-filter={project.filterTag} class="rounded-2xl bg-zinc-900/60 border border-zinc-800/80 p-6 flex flex-col justify-between hover:border-zinc-700 transition-all duration-200 hover:shadow-lg hover:shadow-zinc-950/40">
     <div class="space-y-4">
       <div class="flex items-center justify-between gap-2">
         <span class="text-xs font-mono text-zinc-400 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800">

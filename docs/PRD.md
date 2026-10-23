@@ -41,10 +41,16 @@ The application is structured as a continuous single-page layout with smooth anc
 │ 2. Featured Projects & Case Studies                    │
 │    - Flagship Feature: Papyrus Photobox                │
 │      (Interactive Card, Tech Badges, Metrics, [Case Study Button])
-│    - Secondary Grid:                                   │
-│      • Land Manifest (React Native / Background GPS / Fleet Telemetry) │
-│      • Cash (React Native / Expo / Clean Architecture)                 │
-│      • BRB (macOS Native Swift Proximity Security)                     │
+│    - Category Filter: All (8) | Flutter (3) | React Native (4) | Swift (1)│
+│    - Flagship: Papyrus Photobox (Kiosk HAL / WebRTC / Shorebird OTA) │
+│    - Companion Suite:                                                │
+│      • Land Manifest (Expo TaskManager / Background GPS / WebSocket) │
+│      • Product Catalog Telkom (RN 0.86 / Clean Architecture + MVVM)  │
+│      • SIPKL Mobile (Mapbox Vector GIS / FlashList / EAS OTA)        │
+│      • BRB (macOS Native Swift / CoreBluetooth RSSI EMA Engine)      │
+│      • Cash (React Native / Shopify Skia / PocketBase / Clean Arch)  │
+│      • Amal Academy CTP (Flutter / Riverpod / Midtrans Snap Payments)│
+│      • Amal Partner PTP (Flutter / Riverpod / FL Chart Analytics)    │
 ├────────────────────────────────────────────────────────┤
 │ 3. Technical Arsenal & Architecture Matrix             │
 │    - Mobile Core (Flutter, Swift, React Native, Kotlin)│
@@ -89,10 +95,14 @@ The application is structured as a continuous single-page layout with smooth anc
     - Badges: `Flutter`, `macOS / Desktop`, `iOS / Android`, `Hardware Integration`, `Camera Bridge`.
     - Key Highlights: Cross-platform reliability, low-latency live camera feed, offline-first transaction/session sync, kiosk printing pipeline.
     - Prominent action: **"Read Architectural Case Study →"** (triggers the drawer).
-- **Companion Project Cards**:
+  - **Category Filter Tabs**: Visitors can filter on-the-fly across `All (8)`, `Flutter (3)`, `React Native (4)`, and `Swift / macOS (1)`.
   - **Land Manifest**: Enterprise fleet and driver telemetry application built with React Native and Expo TaskManager. Focus: Background GPS tracking, local FileSystem offline queuing, and real-time WebSocket dispatch.
-  - **Cash**: Personal wealth and cash flow tracker built with React Native / Expo, Clean Architecture, and PocketBase. Focus: Offline persistence, domain separation, robust testing.
+  - **Product Catalog (Telkom)**: Enterprise sales-enablement mobile platform supporting consultative selling. Focus: Clean Architecture + MVVM migration, DI container, dynamic pricing calculation, Expo SDK 57 / RN 0.86.
+  - **SIPKL Mobile**: Geospatial field verification platform. Focus: Mapbox vector clustering, Shopify FlashList 60FPS recycling, client image downsampling, and staged EAS Update OTA channels.
   - **BRB**: macOS menu bar utility written in native Swift / SwiftUI using Bluetooth proximity RSSI tracking for auto-locking and tamper security.
+  - **Cash**: Personal wealth and cash flow tracker built with React Native / Expo, Clean Architecture, and PocketBase. Focus: Offline persistence, domain separation, robust testing.
+  - **Amal Academy (CTP)**: Consumer EdTech Flutter app with Midtrans Snap payment gateway integration and interactive video player hooks.
+  - **Amal Partner (PTP)**: Educational partner touchpoint with FL Chart multi-axis analytics and virtualized roster grids.
 - **Card Content**: Title, brief problem/solution overview, key technical tags, direct repository/demo links (if public), and Case Study trigger.
 
 ### 3.4 Interactive Case Study Drawer (Deep-Dive Modal)
