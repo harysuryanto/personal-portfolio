@@ -1,0 +1,276 @@
+---
+import { projects } from '../data/projects';
+---
+
+<!-- Drawer Backdrop & Container -->
+<div
+  id="case-study-modal"
+  class="fixed inset-0 z-50 transition-opacity duration-300 opacity-0 pointer-events-none"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="drawer-title"
+>
+  <!-- Backdrop Blur overlay -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Slide-over Drawer Panel -->
+  <div class="fixed inset-y-0 right-0 max-w-2xl w-full bg-zinc-950 border-l border-zinc-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out z-10">
+    <!-- Drawer Header -->
+    <div class="px-6 py-5 border-b border-zinc-800/80 flex items-center justify-between bg-zinc-900/60 sticky top-0 z-20 backdrop-blur-md">
+      <div class="flex items-center gap-3">
+        <span id="drawer-category" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          Category
+        </span>
+        <span class="text-xs text-zinc-400 font-mono">Technical Case Study</span>
+      </div>
+
+      <button
+        id="drawer-close-btn"
+        type="button"
+        aria-label="Close case study drawer"
+        class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Drawer Scrollable Body -->
+    <div class="flex-1 overflow-y-auto px-6 py-6 space-y-8 text-zinc-300">
+      <!-- Title & Tagline -->
+      <div>
+        <h2 id="drawer-title" class="text-2xl sm:text-3xl font-bold text-white tracking-tight"></h2>
+        <p id="drawer-tagline" class="text-sm sm:text-base text-zinc-400 mt-1.5"></p>
+
+        <!-- Platform Badges -->
+        <div id="drawer-platforms" class="flex flex-wrap gap-2 mt-4"></div>
+      </div>
+
+      <!-- Metrics Highlight Grid -->
+      <div id="drawer-metrics" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+
+      <!-- Problem & Context -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Operational Context & Problem</span>
+        </h3>
+        <div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/80 space-y-2 text-sm leading-relaxed text-zinc-300">
+          <p id="drawer-context" class="text-zinc-400"></p>
+          <p id="drawer-problem" class="text-zinc-200 font-medium"></p>
+        </div>
+      </div>
+
+      <!-- Architecture Overview -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>Technical Architecture</span>
+        </h3>
+        <div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/80 text-sm leading-relaxed text-zinc-300">
+          <p id="drawer-architecture"></p>
+        </div>
+      </div>
+
+      <!-- Key Engineering Challenges -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span>Engineering Challenges & Solutions</span>
+        </h3>
+        <div id="drawer-challenges" class="space-y-3"></div>
+      </div>
+
+      <!-- Tech Stack & Highlights -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+          <span>Stack & Technical Highlights</span>
+        </h3>
+        <div id="drawer-tech-highlights" class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/80 space-y-2 text-xs"></div>
+      </div>
+
+      <!-- Outcomes -->
+      <div class="space-y-3 pb-6">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Production Outcomes</span>
+        </h3>
+        <div id="drawer-outcomes" class="space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <div class="px-6 py-4 border-t border-zinc-800/80 bg-zinc-900/80 flex items-center justify-between sticky bottom-0 z-20 backdrop-blur-md">
+      <div id="drawer-external-links" class="flex items-center gap-3"></div>
+      <button
+        id="drawer-bottom-close-btn"
+        type="button"
+        class="px-4 py-2 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
+      >
+        Close Case Study
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Embedded Projects Data Script -->
+<script define:vars={{ projects }}>
+  window.__PORTFOLIO_PROJECTS__ = projects;
+
+  const modal = document.getElementById('case-study-modal');
+  const backdrop = document.getElementById('drawer-backdrop');
+  const panel = modal?.querySelector('.transform');
+  const closeBtn = document.getElementById('drawer-close-btn');
+  const bottomCloseBtn = document.getElementById('drawer-bottom-close-btn');
+
+  let activeTriggerElement = null;
+
+  function openDrawer(projectId, triggerBtn) {
+    const project = window.__PORTFOLIO_PROJECTS__.find((p) => p.id === projectId);
+    if (!project) return;
+
+    activeTriggerElement = triggerBtn || document.activeElement;
+
+    // Populate Data
+    const categoryEl = document.getElementById('drawer-category');
+    const titleEl = document.getElementById('drawer-title');
+    const taglineEl = document.getElementById('drawer-tagline');
+    const platformsEl = document.getElementById('drawer-platforms');
+    const metricsEl = document.getElementById('drawer-metrics');
+    const contextEl = document.getElementById('drawer-context');
+    const problemEl = document.getElementById('drawer-problem');
+    const archEl = document.getElementById('drawer-architecture');
+    const challengesEl = document.getElementById('drawer-challenges');
+    const highlightsEl = document.getElementById('drawer-tech-highlights');
+    const outcomesEl = document.getElementById('drawer-outcomes');
+    const linksEl = document.getElementById('drawer-external-links');
+
+    if (categoryEl) categoryEl.textContent = project.category;
+    if (titleEl) titleEl.textContent = project.title;
+    if (taglineEl) taglineEl.textContent = project.tagline;
+
+    if (platformsEl) {
+      platformsEl.innerHTML = project.platforms
+        .map(
+          (plat) =>
+            `<span class="px-2.5 py-1 rounded-md text-xs font-mono bg-zinc-800 text-zinc-300 border border-zinc-700/60">${plat}</span>`
+        )
+        .join('');
+    }
+
+    if (metricsEl) {
+      metricsEl.innerHTML = project.metrics
+        .map(
+          (m) =>
+            `<div class="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800 text-center">
+              <div class="text-sm sm:text-base font-bold font-mono text-emerald-400">${m.value}</div>
+              <div class="text-[11px] text-zinc-400 mt-0.5">${m.label}</div>
+            </div>`
+        )
+        .join('');
+    }
+
+    if (contextEl) contextEl.textContent = project.caseStudy.context;
+    if (problemEl) problemEl.textContent = project.caseStudy.problem;
+    if (archEl) archEl.textContent = project.caseStudy.architectureOverview;
+
+    if (challengesEl) {
+      challengesEl.innerHTML = project.caseStudy.keyChallenges
+        .map(
+          (c) =>
+            `<div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 space-y-2">
+              <h4 class="text-xs font-bold font-mono text-zinc-100 flex items-center gap-1.5">
+                <span class="text-amber-400 font-bold">⚡</span> ${c.title}
+              </h4>
+              <p class="text-xs text-zinc-400 leading-relaxed">${c.description}</p>
+              <div class="pt-2 border-t border-zinc-800/60 text-xs text-emerald-400/90 leading-relaxed">
+                <span class="font-semibold text-zinc-200">Solution:</span> ${c.solution}
+              </div>
+            </div>`
+        )
+        .join('');
+    }
+
+    if (highlightsEl) {
+      highlightsEl.innerHTML = `<ul class="space-y-1.5 list-disc list-inside text-zinc-300">
+        ${project.caseStudy.techHighlights
+          .map((h) => `<li class="leading-relaxed"><span class="text-zinc-200">${h}</span></li>`)
+          .join('')}
+      </ul>`;
+    }
+
+    if (outcomesEl) {
+      outcomesEl.innerHTML = project.caseStudy.outcomes
+        .map(
+          (o) =>
+            `<div class="flex items-start gap-2 text-xs text-zinc-300">
+              <span class="text-emerald-400 mt-0.5">✓</span>
+              <span>${o}</span>
+            </div>`
+        )
+        .join('');
+    }
+
+    if (linksEl) {
+      let linksHtml = '';
+      if (project.githubUrl) {
+        linksHtml += `<a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+          Repository
+        </a>`;
+      }
+      if (project.demoUrl) {
+        linksHtml += `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors">
+          Demo Link ↗
+        </a>`;
+      }
+      linksEl.innerHTML = linksHtml;
+    }
+
+    // Show modal
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100', 'pointer-events-auto');
+    panel?.classList.remove('translate-x-full');
+    panel?.classList.add('translate-x-0');
+    document.body.style.overflow = 'hidden';
+
+    // Focus close button for accessibility
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeDrawer() {
+    panel?.classList.remove('translate-x-0');
+    panel?.classList.add('translate-x-full');
+    modal?.classList.remove('opacity-100', 'pointer-events-auto');
+    modal?.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+
+    if (activeTriggerElement) {
+      activeTriggerElement.focus();
+      activeTriggerElement = null;
+    }
+  }
+
+  closeBtn?.addEventListener('click', closeDrawer);
+  bottomCloseBtn?.addEventListener('click', closeDrawer);
+  backdrop?.addEventListener('click', closeDrawer);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal?.classList.contains('pointer-events-none')) {
+      closeDrawer();
+    }
+  });
+
+  // Attach triggers
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-case-study]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const targetBtn = e.currentTarget;
+        const id = targetBtn.getAttribute('data-case-study');
+        if (id) openDrawer(id, targetBtn);
+      });
+    });
+  });
+</script>

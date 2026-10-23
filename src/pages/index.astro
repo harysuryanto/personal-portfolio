@@ -1,18 +1,29 @@
 ---
----
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import SkillsMatrix from '../components/SkillsMatrix.astro';
+import Experience from '../components/Experience.astro';
+import Contact from '../components/Contact.astro';
+import CaseStudyDrawer from '../components/CaseStudyDrawer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- Hero Section -->
+  <Hero />
+
+  <!-- Selected Work / Flagship Showcase -->
+  <ProjectsSection />
+
+  <!-- Technical Skills & Architecture Matrix -->
+  <SkillsMatrix />
+
+  <!-- Experience & Production Milestones -->
+  <Experience />
+
+  <!-- Direct Contact & Socials -->
+  <Contact />
+
+  <!-- Slide-Over Case Study Drawer Modal -->
+  <CaseStudyDrawer />
+</BaseLayout>

@@ -47,7 +47,7 @@ The application is structured as a continuous single-page layout with smooth anc
 ├────────────────────────────────────────────────────────┤
 │ 3. Technical Arsenal & Architecture Matrix             │
 │    - Mobile Core (Flutter, Swift, React Native, Kotlin)│
-│    - Architecture (Clean Architecture, BLoC, Offline)  │
+│    - Architecture (Clean Architecture, MVVM, Offline)  │
 │    - Hardware & Systems (Camera APIs, Platform Bridges)│
 │    - Tooling & DevOps (Fastlane, CI/CD, Stores)        │
 ├────────────────────────────────────────────────────────┤
@@ -112,7 +112,7 @@ The application is structured as a continuous single-page layout with smooth anc
 ### 3.5 Technical Arsenal & Architecture Matrix
 - Categorized into clear engineering domains (avoiding meaningless percentage bars):
   - **Mobile Client**: Flutter & Dart, Swift & SwiftUI, React Native & TypeScript, Kotlin / Jetpack Compose.
-  - **Architecture & Paradigms**: Clean Architecture, BLoC / Riverpod, Offline-first caching (Drift, SQLite), Native Platform Channels / JSI.
+  - **Architecture & Paradigms**: Clean Architecture, MVVM / Riverpod, Offline-first caching (Drift, SQLite), Native Platform Channels / JSI.
   - **Hardware & Native**: External Camera SDKs, Bluetooth Low Energy (BLE), USB/Serial Kiosk hardware, CoreBluetooth.
   - **DevOps & Tooling**: Fastlane, GitHub Actions, App Store Connect, Google Play Console, Postman, Git.
 

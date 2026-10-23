@@ -1,0 +1,69 @@
+---
+import { experiences } from '../data/experience';
+---
+
+<section id="experience" class="py-16 md:py-24 border-t border-zinc-900 scroll-mt-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="max-w-2xl mb-12">
+      <div class="flex items-center gap-2 text-xs font-mono text-amber-400 uppercase tracking-wider mb-2">
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        <span>Track Record</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+        Experience & Shipped Milestones
+      </h2>
+      <p class="text-sm sm:text-base text-zinc-400 mt-2">
+        Production history building client architectures, lead engineering responsibilities, and hardware deployment pipelines.
+      </p>
+    </div>
+
+    <!-- Timeline List -->
+    <div class="relative pl-6 md:pl-8 border-l border-zinc-800 space-y-12">
+      {experiences.map((exp) => (
+        <div class="relative group">
+          <!-- Timeline Node Point -->
+          <div class="absolute -left-[31px] md:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-zinc-950 border-2 border-emerald-500 group-hover:scale-125 transition-transform duration-200"></div>
+
+          <div class="space-y-3">
+            <!-- Header Meta -->
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <h3 class="text-xl font-bold text-white tracking-tight">
+                {exp.role} <span class="text-emerald-400 font-normal">@ {exp.company}</span>
+              </h3>
+              <div class="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                <span>{exp.period}</span>
+                <span class="text-zinc-400">•</span>
+                <span>{exp.location}</span>
+              </div>
+            </div>
+
+            <!-- Role Summary -->
+            <p class="text-sm text-zinc-300 leading-relaxed max-w-3xl">
+              {exp.description}
+            </p>
+
+            <!-- Key Highlights List -->
+            <ul class="space-y-2 pt-1 text-xs sm:text-sm text-zinc-400 max-w-3xl">
+              {exp.highlights.map((h) => (
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 mt-1">▹</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- Tech Pills -->
+            <div class="flex flex-wrap gap-1.5 pt-3">
+              {exp.technologies.map((t) => (
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-zinc-900 text-zinc-400 border border-zinc-800">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
